@@ -7,6 +7,7 @@ fi
 
 source=$1
 temp_dir=$(mktemp -d)
+home=$(pwd)
 
 if [ ! -d "$temp_dir" ]; then
         echo "Ошибка в создании временного каталога"
@@ -47,7 +48,8 @@ if [ $? -ne 0 ]; then
         exit 1
 fi
 
-mv "$output_com" "$(dirname "$source")"
+mv "$output_com" "$home"
+cd "$home"
 
 rm -rf "$temp_dir"
 
