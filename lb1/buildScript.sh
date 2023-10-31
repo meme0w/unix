@@ -43,11 +43,6 @@ fi
 
 "$compiler_com" "$source" -o "$output_com"
 
-if [ $? -ne 0 ]; then
-        echo "Ошибка, при компиляции исходного файла"
-        exit 1
-fi
-
 mv "$output_com" "$home"
 cd "$home"
 
