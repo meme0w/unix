@@ -40,7 +40,7 @@ else
 	exit 1
 fi
 
-"$compiler_com" "$source" -o "${temp_dir}/${output_com}"
+"$compiler_com" "$source" -o "$output_com"
 
 if [ $? -ne 0 ]; then
         echo "Ошибка, при компиляции исходного файла"
