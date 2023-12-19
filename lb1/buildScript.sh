@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [ $# -ne 1 ]; then
 	echo "Ошибка, введите путь к директории"
@@ -7,13 +7,15 @@ fi
 
 source=$1
 temp_dir=$(mktemp -d)
+home=$(pwd)
 
 if [ ! -d "$temp_dir" ]; then
         echo "Ошибка в создании временного каталога"
         exit 1
 fi
-trap 'rm -rf "$temp_dir" && exit 1' EXIT
+trap 'rm -rf "$temp_dir" && exit 1' EXIT INT QUIT PIPE TERM
 
+cp "$source" "$temp_dir"/
 
 if [ ! -f "$source" ]; then
 	echo "Исходный файл не существует: $source"
@@ -27,6 +29,8 @@ if [ -z "$output_com" ]; then
         exit 1
 fi
 
+cd "$temp_dir"
+
 compiler_com=""
 if [[ "$source" == *.c ]]; then
         compiler_com="gcc"
@@ -37,9 +41,10 @@ else
 	exit 1
 fi
 
-"$compiler_com" "$source" -o "${temp_dir}/${output_com}"
+"$compiler_com" "$source" -o "$output_com"
 
-mv "${temp_dir}/${output_com}" "$(dirname "$source")"
+mv "$output_com" "$home"
+cd "$home"
 
 rm -rf "$temp_dir"
 
