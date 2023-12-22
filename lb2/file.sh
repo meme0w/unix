@@ -21,8 +21,8 @@ first_filename() {
 id_cont_file() {
     local file=$1
     
-    # Генерация случайного идентификатора из 12 символов
-    local id=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12) 
+    # Генерация случайного идентификатора из 10 символов
+    local id=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 10) 
 
     # Вывод идентификатора контейнера и порядковый номер файла
     echo "Container id: $id, Filename: $file"
